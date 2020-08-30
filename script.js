@@ -2,7 +2,7 @@
 const canvas = document.querySelector('#etch-a-sketch');
 const ctx = canvas.getContext('2d');
 const shakebutton = document.querySelector('.shake');
-const MOVE_AMOUNT = 50;
+const MOVE_AMOUNT = 30;
 // Setup our canvas for drawing
 // make a variable called height and width from the same properties on our canvas.
 const { width, height } = canvas;
@@ -25,9 +25,9 @@ ctx.stroke();
 // write a draw function
 function draw({ key }) {
   // increment the hue
-  hue += 1;
+  hue += 5;
   console.log(hue);
-  ctx.strokeStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+  ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
   console.log(key);
   // start the path
   ctx.beginPath();
@@ -36,15 +36,28 @@ function draw({ key }) {
   // move our x and y values depending on what the user did
   switch (key) {
     case 'ArrowUp':
-      y -= MOVE_AMOUNT;
+      if(y -MOVE_AMOUNT < 0)
+        y=0;
+      else
+        y -= MOVE_AMOUNT;
+      
       break;
     case 'ArrowRight':
+      if(x +MOVE_AMOUNT > width)
+      x=width;
+      else
       x += MOVE_AMOUNT;
       break;
     case 'ArrowDown':
+      if(y +MOVE_AMOUNT > height)
+      y=height;
+      else
       y += MOVE_AMOUNT;
       break;
     case 'ArrowLeft':
+      if(x -MOVE_AMOUNT < 0)
+        x=0;
+      else  
       x -= MOVE_AMOUNT;
       break;
     default:
